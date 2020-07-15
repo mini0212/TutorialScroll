@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     let scrollView: UIScrollView = UIScrollView()
     
     @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var buttonStart: UIButton!
     private var pageNum: Int = 0
     let titleList: [String] = [
         "펄펄 눈이옵니다",
@@ -67,6 +68,7 @@ class ViewController: UIViewController {
     
     private func setPageControl() {
         view.bringSubviewToFront(pageControl)
+        view.bringSubviewToFront(buttonStart)
         pageControl.numberOfPages = titleList.count
     }
 }
@@ -74,6 +76,18 @@ class ViewController: UIViewController {
 extension ViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentPage = round(scrollView.contentOffset.x / scrollView.frame.size.width)
-        pageControl.currentPage = Int(currentPage)
+        
+        updatePage(with: Int(currentPage))
+    }
+    
+    private func updatePage(with page: Int) {
+        pageControl.currentPage = page
+        if page == titleList.count - 1 {
+            buttonStart.isHidden = false
+            pageControl.isHidden = true
+        } else {
+            buttonStart.isHidden = true
+            pageControl.isHidden = false
+        }
     }
 }
