@@ -58,9 +58,13 @@ class ViewController: UIViewController {
     private func setUpSlide(slides: [OnboardingView]) {
         scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(slides.count), height: view.frame.height)
-        for i in 0 ..< slides.count {
-            slides[i].frame = CGRect(x: view.frame.width * CGFloat(i), y: 0, width: view.frame.width, height: view.frame.height)
-            scrollView.addSubview(slides[i])
+        
+        slides
+            .enumerated()
+            .forEach { (index, element) in
+                let xPostion = view.frame.width * CGFloat(index)
+                element.frame = CGRect(x: xPostion, y: 0, width: view.frame.width, height: view.frame.height)
+                scrollView.addSubview(element)
         }
         view.addSubview(scrollView)
         setPageControl()
